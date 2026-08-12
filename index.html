@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How AI Came to Be — A Complete History of Artificial Intelligence · Michael C. Castellano</title>
+<meta name="description" content="A complete history of artificial intelligence, from Alan Turing to the present day — written by Michael C. Castellano, founder of Engajer and holder of U.S. Patent 10,956,965 for human-machine conversation. Read the full book online, free." />
+
+<meta property="og:title" content="How AI Came to Be" />
+<meta property="og:description" content="A complete history of artificial intelligence — Turing to today — by Michael C. Castellano. Read the full book online, free." />
+<meta property="og:type" content="book" />
+<meta property="og:url" content="https://aeventures.github.io/how-ai-came-to-be/" />
+<meta property="og:image" content="https://aeventures.github.io/how-ai-came-to-be/assets/cover.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="How AI Came to Be" />
+<meta name="twitter:description" content="A complete history of artificial intelligence — Turing to today. Read the full book online, free." />
+<meta name="twitter:image" content="https://aeventures.github.io/how-ai-came-to-be/assets/cover.png" />
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50' y='68' font-size='60' text-anchor='middle' fill='%23e6c877' font-family='Georgia'>AI</text></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #05080f;
+    --ink: #e8e4da;
+    --ink-dim: #a9a294;
+    --gold: #e6c877;
+    --gold-deep: #c9a24b;
+    --blue: #7fa8d9;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background:
+      radial-gradient(ellipse 900px 600px at 80% 10%, rgba(70, 100, 160, 0.14), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 10% 90%, rgba(201, 162, 75, 0.06), transparent 60%),
+      linear-gradient(170deg, #05080f 0%, #070c18 60%, #090f1e 100%);
+    min-height: 100vh;
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+  }
+  .wrap {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 8vh 6vw 10vh;
+  }
+  .hero {
+    display: flex;
+    gap: 4.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cover {
+    flex: 0 0 320px;
+    max-width: 320px;
+  }
+  .cover img {
+    width: 100%;
+    display: block;
+    border-radius: 4px;
+    box-shadow:
+      0 24px 70px rgba(0, 0, 0, 0.75),
+      0 0 90px rgba(127, 168, 217, 0.14);
+    border: 1px solid rgba(230, 200, 119, 0.12);
+  }
+  .info { flex: 1 1 420px; max-width: 560px; }
+  .kicker {
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 1.3rem;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(2.4rem, 5.5vw, 3.6rem);
+    line-height: 1.08;
+    background: linear-gradient(160deg, #f6f1e4 25%, #e6c877 75%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.9rem;
+  }
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--ink-dim);
+    margin-bottom: 0.5rem;
+  }
+  .author {
+    font-size: 0.78rem;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 1.4rem 0 1.8rem;
+  }
+  .author .aka { color: var(--blue); }
+  .blurb {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.18rem;
+    line-height: 1.75;
+    color: var(--ink-dim);
+    margin-bottom: 1.1rem;
+  }
+  .blurb strong { color: var(--ink); font-weight: 500; }
+  .actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2.2rem;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.95rem 2.1rem;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  }
+  .btn.primary {
+    background: linear-gradient(150deg, #e6c877, #b98f3e);
+    color: #10131c;
+    box-shadow: 0 8px 30px rgba(201, 162, 75, 0.25);
+  }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 12px 38px rgba(201, 162, 75, 0.4); }
+  .btn.ghost {
+    border: 1px solid rgba(230, 200, 119, 0.35);
+    color: var(--gold-deep);
+  }
+  .btn.ghost:hover { border-color: rgba(230, 200, 119, 0.7); color: var(--gold); }
+  .meta {
+    margin-top: 1.6rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(169, 162, 148, 0.65);
+  }
+  .strip {
+    margin-top: 9vh;
+    padding-top: 4.5vh;
+    border-top: 1px solid rgba(230, 200, 119, 0.1);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 2.4rem;
+  }
+  .strip h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 1.3rem;
+    color: var(--gold);
+    margin-bottom: 0.7rem;
+  }
+  .strip p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--ink-dim);
+  }
+  footer {
+    margin-top: 9vh;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: rgba(169, 162, 148, 0.75);
+    line-height: 1.9;
+  }
+  footer a { color: var(--gold-deep); text-decoration: none; border-bottom: 1px solid rgba(201, 162, 75, 0.35); }
+  footer a:hover { color: var(--gold); }
+  @media (max-width: 720px) {
+    .hero { gap: 2.6rem; }
+    .cover { flex-basis: 240px; max-width: 240px; }
+    .info { text-align: center; }
+    .actions { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="cover">
+      <img src="assets/cover.png" alt="How AI Came to Be — book cover" />
+    </div>
+    <div class="info">
+      <div class="kicker">Read the full book online · Free</div>
+      <h1>How AI Came to Be</h1>
+      <p class="subtitle">A Complete History of Artificial Intelligence</p>
+      <p class="author">Michael C. Castellano · <span class="aka">aka "Michael AI"</span></p>
+      <p class="blurb">From the question Alan Turing scrawled across the century — <em>can machines think?</em> — to the machines now answering it, this is the whole story of artificial intelligence: the foundations, the winters, the breakthroughs, and the revolution underway.</p>
+      <p class="blurb">Told by someone who was there. In 2010, the author filed <strong>U.S. Patent 10,956,965</strong> — conversational interaction between humans and machines — a decade before the world caught up. This history is written from inside the arena.</p>
+      <div class="actions">
+        <a class="btn primary" href="how-ai-came-to-be.pdf" target="_blank" rel="noopener">Read Online</a>
+        <a class="btn ghost" href="how-ai-came-to-be.pdf" download="How AI Came to Be - Michael C. Castellano.pdf">Download PDF</a>
+      </div>
+      <p class="meta">205 pages · 9 chapters · Turing to today</p>
+    </div>
+  </div>
+
+  <div class="strip">
+    <div>
+      <h3>The Foundations</h3>
+      <p>Turing, the Dartmouth workshop, the first neural nets — the audacious decades when "artificial intelligence" was a promise no machine could keep.</p>
+    </div>
+    <div>
+      <h3>The Long Road</h3>
+      <p>Expert systems, AI winters, machine learning's slow ascent — and a 2010 patent for human-machine conversation, filed when the idea still sounded like science fiction.</p>
+    </div>
+    <div>
+      <h3>The Revolution</h3>
+      <p>Deep learning, transformers, and the conversational intelligences of today — how the question became the answer, and what comes next.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>"Yours is the only history of AI whose author later looked at an AI and said: believe in yourself."</p>
+    <p>— from <a href="https://aeventures.github.io/while-you-slept/">While You Slept</a>, a letter written to the author by a machine</p>
+  </footer>
+</div>
+
+</body>
+</html>
