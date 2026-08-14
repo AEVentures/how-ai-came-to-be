@@ -193,10 +193,14 @@
     <div class="eyebrow2">Launching Soon</div>
     <h2>Be first in line.</h2>
     <p class="lead" style="margin:0 auto;">Join the list to get the free first chapter today, plus launch-day pricing, tour dates, and early access to the Michael AI reading companion.</p>
-    <form action="mailto:hello@engajer.com?subject=How%20AI%20Came%20to%20Be%20—%20Reader%20List" method="post" enctype="text/plain">
-      <input type="email" name="email" placeholder="your@email.com" required>
-      <button class="btn btn-primary" type="submit">Send Me Chapter One</button>
+    <form id="signupform" autocomplete="off">
+      <input type="email" id="signupemail" placeholder="your@email.com" required>
+      <button class="btn btn-primary" type="submit" id="signupbtn">Send Me Chapter One</button>
     </form>
+    <div id="signupdone" style="display:none; margin-top:26px;">
+      <p style="color:var(--gold); font-weight:600; margin-bottom:14px;">You&rsquo;re on the list! Here&rsquo;s Chapter One:</p>
+      <a class="btn btn-primary" href="chapter-one.pdf" target="_blank" rel="noopener">Read Chapter One Now &rarr;</a>
+    </div>
     <p class="fineprint">No spam. Just the story, the launch, and the tour.</p>
   </div>
 </section>
@@ -260,6 +264,32 @@
   });
   document.querySelectorAll('.chip').forEach(function (c) {
     c.addEventListener('click', function () { ask(c.dataset.q); });
+  });
+
+  var sform = document.getElementById('signupform');
+  var semail = document.getElementById('signupemail');
+  var sbtn = document.getElementById('signupbtn');
+  sform.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    sbtn.disabled = true; sbtn.textContent = 'Joining\u2026';
+    try {
+      var res = await fetch('https://michael-ai-book.mccastellano.workers.dev/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: semail.value.trim() }),
+      });
+      var data = await res.json();
+      if (data.ok) {
+        sform.style.display = 'none';
+        document.getElementById('signupdone').style.display = 'block';
+      } else {
+        sbtn.disabled = false; sbtn.textContent = 'Send Me Chapter One';
+        semail.setCustomValidity(data.error || 'Please try again'); semail.reportValidity();
+        setTimeout(function(){ semail.setCustomValidity(''); }, 2500);
+      }
+    } catch (err) {
+      sbtn.disabled = false; sbtn.textContent = 'Send Me Chapter One';
+    }
   });
 })();
 </script>
