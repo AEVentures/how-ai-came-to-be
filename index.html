@@ -94,6 +94,17 @@
     .cover { max-width: 280px; margin: 0 auto; display: block; }
     h1 { font-size: 38px; } .grid3 { grid-template-columns: 1fr; }
   }
+
+  #chatlog { max-height: 420px; overflow-y: auto; padding-right: 6px; }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 18px 0 8px; }
+  .chip { background: rgba(79,168,255,0.1); border: 1px solid rgba(79,168,255,0.3); color: var(--blue);
+          border-radius: 999px; padding: 8px 16px; font-size: 13px; font-family: inherit; cursor: pointer; transition: background .2s; }
+  .chip:hover { background: rgba(79,168,255,0.25); }
+  #chatform { display: flex; gap: 10px; margin-top: 16px; }
+  #chatinput { flex: 1; padding: 13px 16px; border-radius: 10px; border: 1px solid rgba(233,236,244,0.2);
+               background: rgba(10,17,40,0.8); color: var(--text); font-family: inherit; font-size: 15px; }
+  #chatinput:focus { outline: none; border-color: var(--blue); }
+  .bubble.typing { color: var(--muted); font-style: italic; }
 </style>
 </head>
 <body>
@@ -132,14 +143,20 @@
     <div class="eyebrow2">A World First</div>
     <h2>Don&rsquo;t just read the story.<br>Have a conversation with it.</h2>
     <p class="lead">This book is about humans learning to converse with machines — so it would be strange if you couldn&rsquo;t converse with the book. Michael AI, the author&rsquo;s virtual persona built on Engajer&rsquo;s patented conversational technology, reads along with you, answers your questions, and goes deeper on any chapter.</p>
-    <div class="chatframe">
-      <div class="bubble reader"><div class="who">You</div>Wait — someone actually passed the Turing Test without knowing it was a test?</div>
-      <div class="bubble michael"><div class="who">Michael AI</div>She thought she was on a FaceTime call with Michael. She talked with the persona the way you talk with a friend. Only afterward did anyone realize what had happened. Want me to tell you how we got there — starting with a silent video on a computer screen in 2009?</div>
-      <div class="bubble reader"><div class="who">You</div>Yes. And what would Alan Turing have thought of it?</div>
-      <div class="bubble michael"><div class="who">Michael AI</div>Now that is a great question. Chapter 1 is where his story starts — let&rsquo;s go there together.</div>
-      <div style="margin-top:24px;">
-        <a class="btn btn-primary" href="https://engajer.com" target="_blank" rel="noopener">Start the Conversation &rarr;</a>
+    <div class="chatframe" id="chatframe">
+      <div id="chatlog">
+        <div class="bubble michael"><div class="who">Michael AI</div>Hey, I’m Michael AI — the author’s virtual persona, and living proof of this book’s thesis: you’re having a real conversation with a non-human system right now. Ask me anything about the book — Turing, ChatGPT, DeepSeek, Anthropic, the future, or the night a person named Barbara couldn’t tell she was talking to a machine.</div>
       </div>
+      <div class="chips" id="chips">
+        <button class="chip" data-q="Who was Barbara and what happened with the Turing Test?">The Barbara story</button>
+        <button class="chip" data-q="What did Alan Turing actually propose in 1950?">Turing’s question</button>
+        <button class="chip" data-q="What does the book predict for the next 50 years?">The next 50 years</button>
+        <button class="chip" data-q="What is Engajer and what did it patent?">What is Engajer?</button>
+      </div>
+      <form id="chatform" autocomplete="off">
+        <input type="text" id="chatinput" placeholder="Ask Michael AI about the book…" maxlength="500" required>
+        <button class="btn btn-primary" type="submit" id="sendbtn">Send</button>
+      </form>
     </div>
   </div>
 </section>
@@ -191,5 +208,60 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  var API = 'https://michael-ai-book.mccastellano.workers.dev/chat';
+  var log = document.getElementById('chatlog');
+  var form = document.getElementById('chatform');
+  var input = document.getElementById('chatinput');
+  var send = document.getElementById('sendbtn');
+  var history = [];
+
+  function bubble(role, text, typing) {
+    var d = document.createElement('div');
+    d.className = 'bubble ' + (role === 'user' ? 'reader' : 'michael') + (typing ? ' typing' : '');
+    d.innerHTML = '<div class="who">' + (role === 'user' ? 'You' : 'Michael AI') + '</div>';
+    d.appendChild(document.createTextNode(text));
+    log.appendChild(d);
+    log.scrollTop = log.scrollHeight;
+    return d;
+  }
+
+  async function ask(q) {
+    bubble('user', q);
+    history.push({ role: 'user', content: q });
+    input.value = ''; input.disabled = true; send.disabled = true;
+    var t = bubble('assistant', 'Michael AI is thinking…', true);
+    try {
+      var res = await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: history }),
+      });
+      var data = await res.json();
+      t.remove();
+      if (data.reply) {
+        bubble('assistant', data.reply);
+        history.push({ role: 'assistant', content: data.reply });
+      } else {
+        bubble('assistant', data.error || 'Something went sideways. Try again?');
+      }
+    } catch (e) {
+      t.remove();
+      bubble('assistant', 'I lost my train of thought — the network hiccuped. Ask me again?');
+    }
+    input.disabled = false; send.disabled = false; input.focus();
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var q = input.value.trim();
+    if (q) ask(q);
+  });
+  document.querySelectorAll('.chip').forEach(function (c) {
+    c.addEventListener('click', function () { ask(c.dataset.q); });
+  });
+})();
+</script>
 </body>
 </html>
