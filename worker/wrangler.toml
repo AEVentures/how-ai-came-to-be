@@ -1,0 +1,25 @@
+name = "michael-ai-book"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+
+routes = [
+  { pattern = "howaicametobe.com", custom_domain = true },
+  { pattern = "www.howaicametobe.com", custom_domain = true }
+]
+
+[ai]
+binding = "AI"
+
+[[vectorize]]
+binding = "BOOK_INDEX"
+index_name = "how-ai-came-to-be"
+
+[observability]
+enabled = true
+
+[[kv_namespaces]]
+binding = "READERS"
+id = "e4c789b4ef664edd855b600decf8c734"
+
+[assets]
+directory = "public"

@@ -214,7 +214,8 @@
 
 <script>
 (function () {
-  var API = 'https://michael-ai-book.mccastellano.workers.dev/chat';
+  var API_BASE = location.hostname.endsWith('howaicametobe.com') ? '' : 'https://michael-ai-book.mccastellano.workers.dev';
+  var API = API_BASE + '/chat';
   var log = document.getElementById('chatlog');
   var form = document.getElementById('chatform');
   var input = document.getElementById('chatinput');
@@ -273,7 +274,7 @@
     e.preventDefault();
     sbtn.disabled = true; sbtn.textContent = 'Joining\u2026';
     try {
-      var res = await fetch('https://michael-ai-book.mccastellano.workers.dev/subscribe', {
+      var res = await fetch(API_BASE + '/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: semail.value.trim() }),
